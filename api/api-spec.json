@@ -11,7 +11,7 @@
         }
     ],
     "paths": {
-        "api/categories": {
+        "/api/categories": {
             "get": {
                 "description": "List all categories",
                 "responses": {
