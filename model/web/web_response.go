@@ -1,5 +1,5 @@
 package web
 
 type WebResponse struct {
-	Data interface{}
+	Data interface{} `json:"data"`
 }
