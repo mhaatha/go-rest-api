@@ -11,6 +11,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/mhaatha/go-rest-api/app"
 	"github.com/mhaatha/go-rest-api/controller"
+	"github.com/mhaatha/go-rest-api/exception"
 	"github.com/mhaatha/go-rest-api/repository"
 	"github.com/mhaatha/go-rest-api/service"
 )
@@ -36,6 +37,8 @@ func main() {
 	router.POST("/api/categories", categoryController.Create)
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
+
+	router.PanicHandler = exception.ErrorHandler
 
 	server := http.Server{
 		Addr:    "localhost:3000",
