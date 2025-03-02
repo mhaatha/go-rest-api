@@ -12,6 +12,7 @@ import (
 	"github.com/mhaatha/go-rest-api/app"
 	"github.com/mhaatha/go-rest-api/controller"
 	"github.com/mhaatha/go-rest-api/exception"
+	"github.com/mhaatha/go-rest-api/middleware"
 	"github.com/mhaatha/go-rest-api/repository"
 	"github.com/mhaatha/go-rest-api/service"
 )
@@ -42,7 +43,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    "localhost:3000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 
 	if err := server.ListenAndServe(); err != nil {
