@@ -8,10 +8,8 @@ import (
 	"github.com/go-playground/validator/v10"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
-	"github.com/julienschmidt/httprouter"
 	"github.com/mhaatha/go-rest-api/app"
 	"github.com/mhaatha/go-rest-api/controller"
-	"github.com/mhaatha/go-rest-api/exception"
 	"github.com/mhaatha/go-rest-api/middleware"
 	"github.com/mhaatha/go-rest-api/repository"
 	"github.com/mhaatha/go-rest-api/service"
@@ -31,15 +29,7 @@ func main() {
 	categoryService := service.NewCategoryService(categoryRepository, db, validate)
 	categoryController := controller.NewCategoryController(categoryService)
 
-	router := httprouter.New()
-
-	router.GET("/api/categories", categoryController.FindAll)
-	router.GET("/api/categories/:categoryId", categoryController.FindById)
-	router.POST("/api/categories", categoryController.Create)
-	router.PUT("/api/categories/:categoryId", categoryController.Update)
-	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
-
-	router.PanicHandler = exception.ErrorHandler
+	router := app.NewRouter(categoryController)
 
 	server := http.Server{
 		Addr:    "localhost:3000",
